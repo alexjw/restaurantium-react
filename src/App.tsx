@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Route, Switch} from 'react-router-dom'
+import HomePage from "./components/homePage";
+import IngredientsPage from "./components/ingredientsPage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component<any, any>{
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            greeting: 'x'
+        }
+    }
+
+    /*componentDidMount(): void {
+        fetch(GRAPHQL_URL,
+            {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        query: `
+                        query {
+                            greeting
+                        }`
+                    }
+                )
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+                this.setState({greeting: response.data.greeting});
+            })
+    }*/
+
+    render() {
+        return (
+            <div className="App">
+                <Switch>
+                    <Route exact path='/' component={HomePage} />
+                    <Route exact path='/ingredients' component={IngredientsPage}/>
+                </Switch>
+            </div>
+        )
+    }
 }
 
 export default App;
