@@ -1,51 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Route, Switch} from 'react-router-dom'
 import HomePage from "./components/homePage";
 import IngredientsPage from "./components/ingredientsPage";
 
-class App extends React.Component<any, any>{
 
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            greeting: 'x'
-        }
-    }
+const App = (props) => {
 
-    /*componentDidMount(): void {
-        fetch(GRAPHQL_URL,
-            {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        query: `
-                        query {
-                            greeting
-                        }`
-                    }
-                )
-            })
-            .then(response => response.json())
-            .then(response => {
-                console.log(response);
-                this.setState({greeting: response.data.greeting});
-            })
-    }*/
+    const [get, set] = useState('DefaultValue'); // The example of Hooks
 
-    render() {
-        return (
-            <div className="App">
-                <Switch>
-                    <Route exact path='/' component={HomePage} />
-                    <Route exact path='/ingredients' component={IngredientsPage}/>
-                </Switch>
-            </div>
-        )
-    }
-}
+    // The example of useEffect, when something changes/re renders / or whenever a set of UseState is called
+    useEffect(() => {
+        console.log('Component did mount')
+    }, []); // Similar to ComponentDidMount, if you watch set, it will be called if set is called
+
+    return (
+        <div className="App">
+            <Switch>
+                <Route exact path='/' component={HomePage} />
+                <Route exact path='/ingredients' component={IngredientsPage}/>
+            </Switch>
+        </div>
+    )
+};
 
 export default App;

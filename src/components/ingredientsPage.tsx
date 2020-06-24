@@ -1,47 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import {gql} from "apollo-boost";
 import {Query, QueryResult} from 'react-apollo';
 
-interface State {
+interface typeOfData {
     ingredients: {
         _id: string,
         name: string
     }[]
 }
 
-class IngredientsPage extends React.Component<any, State> {
+interface Props {
+    ingredients: {
+        _id: string,
+        name: string
+    }[]
+}
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            ingredients: []
-        }
-    }
+interface Ingredient {
+    _id: string;
+    name: string;
+}
 
-    theQuery = gql`
+
+const IngredientsPage = (props) => {
+
+    const [ingredients , setIngredients] = useState([]);
+
+    const theQuery = gql`
         {
             ingredients {
-                _id, 
+                _id,
                 name
             }
         }
     `;
 
-    render() {
-        return (
-            <div>
-                <h1>The Ingredients Page</h1>
-                <Query query={this.theQuery}>
-                    {
-                        (something: QueryResult) => {
-                            if(!something.loading)
-                                return <div>{something.data.ingredients.map(ingredient => (<li key={ingredient._id}>{ingredient._id} - {ingredient.name}</li>))}</div>;
-                            return <div>Loading</div>
-                        }
+    return (
+        <div>
+            <h1>The Ingredients Page</h1>
+            <Query query={theQuery}>
+                {
+                    (something: QueryResult<typeOfData>) => {
+                        if(!something.loading)
+                            setIngredients(something.data.ingredients);
+                        return null;
                     }
-                </Query>
-            </div>)
-    }
+                }
+            </Query>
+            <ul>
+                {ingredients.map(ingredient => <li>{ingredient.name} - {ingredient._id}</li>)}
+            </ul>
+        </div>
+    )
 }
 
 export default IngredientsPage;

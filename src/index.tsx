@@ -9,6 +9,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient, gql } from 'apollo-boost';
 import * as Constants from "./utils/constants";
+import {resolvers, typeDefs} from "./graphql/resolvers";
 
 const httpLink = createHttpLink(
     {
@@ -21,45 +22,18 @@ const cache = new InMemoryCache();
 const client = new ApolloClient(
     {
         link: httpLink,
-        cache
+        cache,
+        typeDefs,
+        resolvers
     }
 );
 
-client.query(
+client.writeData(
     {
-        query: gql`
-            {
-                order(_id: "5eec0a4141c0cb30e00c51cf") {
-                    _id,
-                    total,
-                    details {
-                        item {
-                            _id, name
-                        },
-                        meal {
-                            name,
-                            details {
-                                ingredient {
-                                    _id,
-                                    name
-                                },
-                                quantity
-                            }
-                        },
-                        size,
-                        quantity
-                    },
-                    client {
-                        lastName,
-                        firstName
-                    }
-                }
-            }
-        `
-    }
-).then(result => {
-    console.log(result.data)
-});
+        data: {
+            someData: 'x'
+        }
+    });
 
 ReactDOM.render(
   <React.StrictMode>
