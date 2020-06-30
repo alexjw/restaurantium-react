@@ -20,10 +20,6 @@ export interface theInput {
     measureUnit: string;
 }
 
-interface TheProps {
-
-}
-
 const IngredientsPage = (props) => {
 
     //const [ingredients , setIngredients] = useState<Ingredient[]>([]);
@@ -51,6 +47,7 @@ const IngredientsPage = (props) => {
                         <p>Loading...</p> :
                         data.ingredients.map(ingredient => (
                             <li key={ingredient._id}>{ingredient.name} - {ingredient._id}
+                                <button onClick={() => props.history.push('/ingredients/' + ingredient._id)}>View</button>
                                 <button onClick={() => setIngredient(ingredient)}>Edit</button>
                                 <button onClick={() => deleteIngredient({variables: {_id: ingredient._id}})}>
                                     Delete
@@ -59,18 +56,10 @@ const IngredientsPage = (props) => {
                         )
                 }
             </ul>
-            <p>Another way</p>
-            <ul>
-                {
-                    props.data.loading ?
-                        <p>Loading...</p> :
-                        props.data.ingredients.map(ingredient => <li key={ingredient._id}>{ingredient.name} - {ingredient._id}</li>)
-                }
-            </ul>
             <h3>Add Ingredient</h3>
             <CreateIngredient ingredient={ingredient}/>
         </div>
     )
 };
 
-export default graphql(GET_INGREDIENTS)(IngredientsPage);   // it gives props
+export default IngredientsPage;

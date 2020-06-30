@@ -59,20 +59,6 @@ const CreateIngredient = (props: TheProps) => {
                 </p>
                 <button onClick={(event) => {
                     event.preventDefault();
-                    /*props.mutate({
-                        variables:
-                            {
-                                input: {
-                                    name,
-                                    measureUnit
-                                }
-                            },
-                        refetchQueries: [{query: GET_INGREDIENTS}]
-                    }).then((something) => {
-                        console.log(something);
-                        props.history.push('/ingredients');
-                    });*/
-
                     if(ingredient){
                         editIngredient({
                             variables: {

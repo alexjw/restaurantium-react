@@ -31,3 +31,11 @@ export const EDIT_INGREDIENT = gql`
         }
     }
 `;
+
+export const FIND_INGREDIENT = gql`
+    query findIngredient($_id: String!) {
+        ingredient(_id: $_id) {
+            _id, name, measureUnit
+        }
+    }
+`;
