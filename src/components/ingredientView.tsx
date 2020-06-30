@@ -20,13 +20,12 @@ const IngredientView = (props) => {
             {
                 findQuery.loading ?
                     <p>Loading...</p> :
-                    (
+                    findQuery.error ? <p>Error loading data</p> :
                         <div>
-                            <p>{findQuery.data.ingredient._id}</p>
-                            <p>{findQuery.data.ingredient.name}</p>
-                            <p>{findQuery.data.ingredient.measureUnit}</p>
+                            <p>id: {findQuery.data.ingredient._id}</p>
+                            <p>name: {findQuery.data.ingredient.name}</p>
+                            <p>measure unit: {findQuery.data.ingredient.measureUnit}</p>
                         </div>
-                    )
             }
         </div>
     )
