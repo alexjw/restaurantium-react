@@ -20,26 +20,14 @@ export interface theInput {
     measureUnit: string;
 }
 
-interface subscriptionResult {
-    ingredientAdded: Ingredient;
-}
-
-const INGREDIENT_CREATED_SUBSCRIPTION = gql`
-    subscription IngredientAdded {
-        ingredientAdded {
-            _id,
-            name
-        }
-    }
-`;
-
 interface TheProps {
 
 }
 
 const IngredientsPage = (props) => {
 
-    const [ingredients , setIngredients] = useState([]);
+    //const [ingredients , setIngredients] = useState<Ingredient[]>([]);
+    const [ingredient, setIngredient] = useState<Ingredient>(null);
 
     const { loading, data } = useQuery<IngredientsData>( GET_INGREDIENTS );
 
@@ -63,6 +51,7 @@ const IngredientsPage = (props) => {
                         <p>Loading...</p> :
                         data.ingredients.map(ingredient => (
                             <li key={ingredient._id}>{ingredient.name} - {ingredient._id}
+                                <button onClick={() => setIngredient(ingredient)}>Edit</button>
                                 <button onClick={() => deleteIngredient({variables: {_id: ingredient._id}})}>
                                     Delete
                                 </button>
@@ -79,7 +68,7 @@ const IngredientsPage = (props) => {
                 }
             </ul>
             <h3>Add Ingredient</h3>
-            <CreateIngredient {...props}/>
+            <CreateIngredient ingredient={ingredient}/>
         </div>
     )
 };

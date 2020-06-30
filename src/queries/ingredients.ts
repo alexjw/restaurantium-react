@@ -4,7 +4,8 @@ export const GET_INGREDIENTS = gql`
     {
         ingredients {
             _id,
-            name
+            name,
+            measureUnit
         }
     }
 `;
@@ -20,5 +21,13 @@ export const SAVE_INGREDIENT = gql`
 export const DELETE_INGREDIENT = gql`
     mutation deleteIngredient($_id: String!) {
         deleteIngredient(_id: $_id)
+    }
+`;
+
+export const EDIT_INGREDIENT = gql`
+    mutation editIngredient($_id: String!, $name: String, $measureUnit: String){
+        editIngredient(_id: $_id, name: $name, measureUnit: $measureUnit) {
+            _id, name, measureUnit
+        }
     }
 `;
