@@ -16,3 +16,9 @@ export const SAVE_INGREDIENT = gql`
         }
     }
 `;
+
+export const DELETE_INGREDIENT = gql`
+    mutation deleteIngredient($_id: String!) {
+        deleteIngredient(_id: $_id)
+    }
+`;

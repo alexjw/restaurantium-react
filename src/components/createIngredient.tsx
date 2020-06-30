@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {useMutation} from "@apollo/react-hooks";
 import {graphql} from "react-apollo";
 import {gql} from "apollo-boost";
-import {GET_INGREDIENTS, SAVE_INGREDIENT} from "../queries/ingredients";
+import {DELETE_INGREDIENT, GET_INGREDIENTS, SAVE_INGREDIENT} from "../queries/ingredients";
 
 
 
