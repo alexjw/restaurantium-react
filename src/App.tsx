@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {Route, Switch} from 'react-router-dom'
+import {Route, RouteComponentProps, Switch} from 'react-router-dom'
 import HomePage from "./components/homePage";
 import IngredientsPage from "./components/ingredientsPage";
 import IngredientView from "./components/ingredientView";
@@ -8,7 +8,7 @@ import Header from "./components/header";
 import IngredientCreateEdit from "./components/ingredientCreateEdit";
 
 
-const App = (props) => {
+const App = () => {
 
     const [get, set] = useState('DefaultValue'); // The example of Hooks
 
@@ -23,9 +23,9 @@ const App = (props) => {
             <Switch>
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/ingredients' component={IngredientsPage}/>
-                <Route exact path='/ingredients/add' component={IngredientCreateEdit}/>
+                <Route exact path='/ingredients/new' component={IngredientCreateEdit}/>
                 <Route exact path='/ingredients/:id' component={IngredientView}/>
-                <Route exact path='/ingredients/:id/edit'/>
+                <Route exact path='/ingredients/:id/edit' component={IngredientCreateEdit}/>
             </Switch>
         </div>
     )

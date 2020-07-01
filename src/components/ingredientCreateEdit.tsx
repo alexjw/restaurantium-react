@@ -1,23 +1,34 @@
 import React, {useEffect, useState} from "react";
-import {useMutation} from "@apollo/react-hooks";
-import {DELETE_INGREDIENT, EDIT_INGREDIENT, GET_INGREDIENTS, SAVE_INGREDIENT} from "../queries/ingredients";
+import {useMutation, useLazyQuery} from "@apollo/react-hooks";
+import {
+    DELETE_INGREDIENT,
+    EDIT_INGREDIENT,
+    FIND_INGREDIENT,
+    GET_INGREDIENTS,
+    SAVE_INGREDIENT
+} from "../queries/ingredients";
 import {
     CreateIngredientInput,
     EditIngredientMutation,
-    EditIngredientMutationVariables,
+    EditIngredientMutationVariables, FindIngredientProps, FindIngredientQuery, FindIngredientQueryVariables,
     Ingredient
 } from "../types";
+import {RouteComponentProps} from "react-router-dom";
+import Spinner from "./spinner";
 
-interface TheProps {
-    ingredient?: Ingredient;
-    ingredientId?: string;
+interface TheParams {
+    id: string
+}
+
+interface TheProps extends RouteComponentProps<TheParams> {
+
 }
 
 const IngredientCreateEdit = (props: TheProps) => {
 
     const [name, setName] = useState('');
     const [measureUnit, setMeasureUnit] = useState('');
-    const [ingredient, setIngredient] = useState<Ingredient>();
+    const [loadIngredient, loadResult] = useLazyQuery<FindIngredientQuery, FindIngredientQueryVariables>(FIND_INGREDIENT);
     const [createIngredient, savedResult] = useMutation<
         { createIngredient: Ingredient },
         { input: CreateIngredientInput }
@@ -35,50 +46,58 @@ const IngredientCreateEdit = (props: TheProps) => {
             refetchQueries: [{query: GET_INGREDIENTS}]
     });
 
-    useEffect(() => {
-        setIngredient(props.ingredient);
-    }, [props]);
+    useEffect(() => { // Component did mount
+        if(props.match.params.id)
+            loadIngredient({variables: {_id: props.match.params.id}});
+    }, []);
 
     useEffect(() => {
-        console.log(ingredient);
-        setName(ingredient ? ingredient.name : '');
-        setMeasureUnit(ingredient ? ingredient.measureUnit : '');
-    }, [ingredient]);
+        if(loadResult.data){
+            setName(loadResult.data.ingredient.name);
+            setMeasureUnit(loadResult.data.ingredient.measureUnit);
+        }
+    }, [loadResult]);
+
+    if(loadResult.loading || savedResult.loading)
+        return <Spinner/>;
+
+    const redirection = '/ingredients';
 
     return (
         <div>
-            {savedResult.error ? <p>Oh no! {savedResult.error}</p> : null}
-            {savedResult.data && savedResult.data.createIngredient ? <p>Saved!</p> : null}
             <form>
-                <p>
-                    <label>id:</label>
-                    <label>{ingredient ? ingredient._id : 'x'}</label>
+                    {
+                        loadResult.data && loadResult.data.ingredient ?
+                            <div>
+                                <label>id:</label>
+                                <label>{loadResult.data.ingredient._id}</label>
+                            </div>
+                            : null
+                    }
                     <br/>
                     <label>Name:</label>
                     <input name="name" onChange={e => setName(e.target.value)} value={name} />
                     <br/>
                     <label>MeasureUnit:</label>
                     <input name="measure_unit" onChange={e => setMeasureUnit(e.target.value)} value={measureUnit} />
-                </p>
-                <button onClick={(event) => {
-                    event.preventDefault();
-                    if(ingredient){
-                        editIngredient({
-                            variables: {
-                                _id: ingredient._id,
-                                name: name,
-                                measureUnit: measureUnit
-                            }
-                        }).then(() => {
-                            setIngredient(null);
-                        });
-                    }
-                    else
-                        return createIngredient().then(value => {
-                            setName('');
-                            setMeasureUnit('');
-                        });
-                }}>Add</button>
+                    <button onClick={(event) => {
+                        event.preventDefault();
+                        if(loadResult.data && loadResult.data.ingredient) {
+                            editIngredient({
+                                variables: {
+                                    _id: loadResult.data.ingredient._id,
+                                    name: name,
+                                    measureUnit: measureUnit
+                                }
+                            }).then(() => {
+                                props.history.push(redirection);
+                            });
+                        }
+                        else
+                            createIngredient().then(value => {
+                                props.history.push(redirection);
+                            });
+                    }}>{loadResult.data && loadResult.data.ingredient ? 'Edit' : 'Create'}</button>
             </form>
         </div>
     )

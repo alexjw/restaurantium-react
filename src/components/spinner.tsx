@@ -1,16 +1,9 @@
 import React, {Component} from "react";
 import '../stylesheets/spinner.sass'
 
-interface TheProps extends Object{
-    loading: boolean
-}
-
-const Spinner = (props) => {
-
+const Spinner = () => {
     return (
-        <div className='the-spinner'>
-            { /*props.loading ? <div  className='the-spinner' /> : props.children*/ }
-        </div>
+        <div className='the-spinner'/>
     )
 };
 

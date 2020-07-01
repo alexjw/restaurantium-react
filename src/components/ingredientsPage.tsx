@@ -3,10 +3,9 @@ import { useQuery, useMutation, useSubscription  } from '@apollo/react-hooks';
 import IngredientCreateEdit from "./ingredientCreateEdit";
 import {DELETE_INGREDIENT, GET_INGREDIENTS} from "../queries/ingredients";
 import {GetIngredientsQuery, Ingredient} from "../types";
+import {Link, RouteComponentProps} from "react-router-dom";
 
-const IngredientsPage = (props) => {
-
-    const [ingredient, setIngredient] = useState<Ingredient>(null);
+const IngredientsPage = (props: RouteComponentProps) => {
 
     const { loading, data } = useQuery<GetIngredientsQuery>( GET_INGREDIENTS );
 
@@ -31,7 +30,7 @@ const IngredientsPage = (props) => {
                         data.ingredients.map(ingredient => (
                             <li key={ingredient._id}>{ingredient.name} - {ingredient._id}
                                 <button onClick={() => props.history.push('/ingredients/' + ingredient._id)}>View</button>
-                                <button onClick={() => setIngredient(ingredient)}>Edit</button>
+                                <button onClick={() => props.history.push('/ingredients/' + ingredient._id + '/edit')}>Edit</button>
                                 <button onClick={() => deleteIngredient({variables: {_id: ingredient._id}})}>
                                     Delete
                                 </button>
@@ -39,8 +38,7 @@ const IngredientsPage = (props) => {
                         )
                 }
             </ul>
-            <h3>Add Ingredient</h3>
-            <IngredientCreateEdit ingredient={ingredient}/>
+            <Link to='ingredients/new'>New</Link>
         </div>
     )
 };

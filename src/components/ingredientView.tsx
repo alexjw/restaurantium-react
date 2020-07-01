@@ -3,9 +3,10 @@ import { useQuery } from '@apollo/react-hooks';
 import Spinner from "./spinner";
 import {FIND_INGREDIENT} from "../queries/ingredients";
 import {FindIngredientQuery} from "../types"
+import {RouteComponentProps} from "react-router-dom";
 
 
-const IngredientView = (props) => {
+const IngredientView = (props: RouteComponentProps<{id: string}>) => {
 
     console.log(props);
 
