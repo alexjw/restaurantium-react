@@ -1,24 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { useQuery, useMutation, useSubscription  } from '@apollo/react-hooks';
-import CreateIngredient from "./createIngredient";
+import IngredientCreateEdit from "./ingredientCreateEdit";
 import {DELETE_INGREDIENT, GET_INGREDIENTS} from "../queries/ingredients";
-import {GetIngredientsQuery} from "../types";
-
-
-export interface Ingredient {
-    _id: string;
-    name: string;
-    measureUnit: string;
-}
-
-export interface theInput {
-    name: string;
-    measureUnit: string;
-}
+import {GetIngredientsQuery, Ingredient} from "../types";
 
 const IngredientsPage = (props) => {
 
-    //const [ingredients , setIngredients] = useState<Ingredient[]>([]);
     const [ingredient, setIngredient] = useState<Ingredient>(null);
 
     const { loading, data } = useQuery<GetIngredientsQuery>( GET_INGREDIENTS );
@@ -53,7 +40,7 @@ const IngredientsPage = (props) => {
                 }
             </ul>
             <h3>Add Ingredient</h3>
-            <CreateIngredient ingredient={ingredient}/>
+            <IngredientCreateEdit ingredient={ingredient}/>
         </div>
     )
 };

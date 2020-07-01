@@ -9,7 +9,6 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient, gql } from 'apollo-boost';
 import * as Constants from "./utils/constants";
-import {resolvers, typeDefs} from "./graphql/resolvers";
 
 const httpLink = createHttpLink(
     {

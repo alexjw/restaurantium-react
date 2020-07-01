@@ -12,21 +12,20 @@ const IngredientView = (props) => {
     //const [ingredient, setIngredient] = useState<Ingredient>(props.ingredient);
     const findQuery = useQuery<FindIngredientQuery>(FIND_INGREDIENT, {variables: {_id: props.match.params.id}});
 
+    if(findQuery.loading)
+        return <Spinner/>;
+
+    if(findQuery.error)
+        return <p>Error loading data</p>;
+
     return (
         <div>
             <h3>Ingredient</h3>
-            <Spinner loading={findQuery.loading}>
-                {
-                    findQuery.loading ?
-                        <p>Loading...</p> :
-                        findQuery.error ? <p>Error loading data</p> :
-                            <div>
-                                <p>id: {findQuery.data.ingredient._id}</p>
-                                <p>name: {findQuery.data.ingredient.name}</p>
-                                <p>measure unit: {findQuery.data.ingredient.measureUnit}</p>
-                            </div>
-                }
-            </Spinner>
+                <div>
+                    <p>id: {findQuery.data.ingredient._id}</p>
+                    <p>name: {findQuery.data.ingredient.name}</p>
+                    <p>measure unit: {findQuery.data.ingredient.measureUnit}</p>
+                </div>
         </div>
     )
 };

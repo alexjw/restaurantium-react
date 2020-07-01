@@ -8,8 +8,8 @@ interface TheProps extends Object{
 const Spinner = (props) => {
 
     return (
-        <div style={{ height: '100vh', width: '100vw' }}>
-            { props.loading ? <div  className='the-spinner' /> : props.children }
+        <div className='the-spinner'>
+            { /*props.loading ? <div  className='the-spinner' /> : props.children*/ }
         </div>
     )
 };

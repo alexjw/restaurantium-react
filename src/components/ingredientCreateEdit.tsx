@@ -1,24 +1,26 @@
-import {Ingredient, theInput} from "./ingredientsPage";
 import React, {useEffect, useState} from "react";
 import {useMutation} from "@apollo/react-hooks";
-import {graphql} from "react-apollo";
-import {gql} from "apollo-boost";
 import {DELETE_INGREDIENT, EDIT_INGREDIENT, GET_INGREDIENTS, SAVE_INGREDIENT} from "../queries/ingredients";
+import {
+    CreateIngredientInput,
+    EditIngredientMutation,
+    EditIngredientMutationVariables,
+    Ingredient
+} from "../types";
 
 interface TheProps {
     ingredient?: Ingredient;
+    ingredientId?: string;
 }
 
-const CreateIngredient = (props: TheProps) => {
-
-    //console.log(props);
+const IngredientCreateEdit = (props: TheProps) => {
 
     const [name, setName] = useState('');
     const [measureUnit, setMeasureUnit] = useState('');
-    const [ingredient, setIngredient] = useState<Ingredient>(props.ingredient);
+    const [ingredient, setIngredient] = useState<Ingredient>();
     const [createIngredient, savedResult] = useMutation<
         { createIngredient: Ingredient },
-        { input: theInput }
+        { input: CreateIngredientInput }
         >(SAVE_INGREDIENT, {
         variables: {
             input: {
@@ -28,8 +30,8 @@ const CreateIngredient = (props: TheProps) => {
         }, refetchQueries: [{query: GET_INGREDIENTS}]
     });
     const [editIngredient, editedResult] = useMutation<
-        { editIngredient: Ingredient},
-        { _id: string, name: string, measureUnit: string}>(EDIT_INGREDIENT, {
+        EditIngredientMutation,
+        EditIngredientMutationVariables>(EDIT_INGREDIENT, {
             refetchQueries: [{query: GET_INGREDIENTS}]
     });
 
@@ -38,6 +40,7 @@ const CreateIngredient = (props: TheProps) => {
     }, [props]);
 
     useEffect(() => {
+        console.log(ingredient);
         setName(ingredient ? ingredient.name : '');
         setMeasureUnit(ingredient ? ingredient.measureUnit : '');
     }, [ingredient]);
@@ -66,14 +69,19 @@ const CreateIngredient = (props: TheProps) => {
                                 name: name,
                                 measureUnit: measureUnit
                             }
-                        }).then(() => setIngredient(null));
+                        }).then(() => {
+                            setIngredient(null);
+                        });
                     }
                     else
-                        return createIngredient().then(value => console.log(value));
+                        return createIngredient().then(value => {
+                            setName('');
+                            setMeasureUnit('');
+                        });
                 }}>Add</button>
             </form>
         </div>
     )
 };
 
-export default CreateIngredient;
+export default IngredientCreateEdit;

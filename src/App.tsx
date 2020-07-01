@@ -5,6 +5,7 @@ import HomePage from "./components/homePage";
 import IngredientsPage from "./components/ingredientsPage";
 import IngredientView from "./components/ingredientView";
 import Header from "./components/header";
+import IngredientCreateEdit from "./components/ingredientCreateEdit";
 
 
 const App = (props) => {
@@ -22,7 +23,9 @@ const App = (props) => {
             <Switch>
                 <Route exact path='/' component={HomePage} />
                 <Route exact path='/ingredients' component={IngredientsPage}/>
-                <Route exact path='/ingredients/:id' component={IngredientView}></Route>
+                <Route exact path='/ingredients/add' component={IngredientCreateEdit}/>
+                <Route exact path='/ingredients/:id' component={IngredientView}/>
+                <Route exact path='/ingredients/:id/edit'/>
             </Switch>
         </div>
     )
