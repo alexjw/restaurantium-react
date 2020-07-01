@@ -1,19 +1,16 @@
 import React, {useState} from "react";
 import { useQuery } from '@apollo/react-hooks';
-import {Ingredient} from "./ingredientsPage";
-import {FIND_INGREDIENT} from "../queries/ingredients";
 import Spinner from "./spinner";
+import {FIND_INGREDIENT} from "../queries/ingredients";
+import {FindIngredientQuery} from "../types"
 
-interface IngredientData {
-    ingredient: Ingredient
-}
 
 const IngredientView = (props) => {
 
     console.log(props);
 
     //const [ingredient, setIngredient] = useState<Ingredient>(props.ingredient);
-    const findQuery = useQuery<{ingredient: Ingredient}>(FIND_INGREDIENT, {variables: {_id: props.match.params.id}});
+    const findQuery = useQuery<FindIngredientQuery>(FIND_INGREDIENT, {variables: {_id: props.match.params.id}});
 
     return (
         <div>

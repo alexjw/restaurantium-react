@@ -1,0 +1,133 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+type AdditionalMealInfo {
+    difference: String!
+    ingredient: Ingredient!
+    price: Float!
+    quantity: Float!
+}
+
+type Client {
+    _id: ID!
+    firstName: String!
+    lastName: String!
+}
+
+type Ingredient {
+    _id: ID!
+    measureUnit: String!
+    name: String!
+}
+
+type Item {
+    _id: ID!
+    name: String!
+    sizes: [String!]
+}
+
+type Meal {
+    _id: ID!
+    details: [MealDetail!]!
+    name: String!
+    sizes: [String!]
+}
+
+type MealDetail {
+    ingredient: Ingredient!
+    quantity: Float!
+}
+
+type Mutation {
+    createClient(createClientInput: CreateClientInput!): Client!
+    createIngredient(createIngredientInput: CreateIngredientInput!): Ingredient!
+    createItem(createItemInput: CreateItemInput!): Item!
+    createMeal(createMealInput: CreateMealInput!): Meal!
+    createOrder(createOrderInput: CreateOrderInput!): Order!
+    deleteIngredient(_id: String!): Boolean!
+    editIngredient(_id: String!, measureUnit: String, name: String): Ingredient!
+}
+
+type Order {
+    _id: ID!
+    client: Client
+    details: [OrderDetail!]!
+    total: String!
+}
+
+type OrderDetail {
+    additional_meal_info: [AdditionalMealInfo!]
+    item: Item
+    meal: Meal
+    quantity: Float!
+    size: String
+}
+
+type Query {
+    client: Client!
+    clients: [Client!]!
+    ingredient(_id: String!): Ingredient!
+    ingredients: [Ingredient!]!
+    item(_id: String!): Item!
+    items: [Item!]!
+    meal(_id: String!): Meal!
+    meals: [Meal!]!
+    order(_id: String!): Order!
+    orders: [Order!]!
+}
+
+type Subscription {
+    ingredientAdded: Ingredient!
+}
+
+input AdditionalMealInfoInput {
+    difference: String!
+    ingredient_id: String!
+    price: Float!
+    quantity: Float!
+}
+
+input CreateClientInput {
+    firstName: String!
+    lastName: String!
+}
+
+input CreateIngredientInput {
+    measureUnit: String!
+    name: String!
+}
+
+input CreateItemInput {
+    name: String!
+    sizes: [String!]
+}
+
+input CreateMealDetailInput {
+    ingredient_id: String!
+    quantity: Float!
+}
+
+input CreateMealInput {
+    details: [CreateMealDetailInput!] = []
+    name: String!
+    sizes: [String!]
+}
+
+input CreateOrderDetailInput {
+    additional_meal_info: [AdditionalMealInfoInput!]
+    item_id: String
+    meal_id: String
+    quantity: Float!
+    size: String
+}
+
+input CreateOrderInput {
+    client_id: String
+    details: [CreateOrderDetailInput!] = []
+    total: Float!
+}

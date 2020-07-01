@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {gql} from "apollo-boost";
 import { useQuery, useMutation, useSubscription  } from '@apollo/react-hooks';
-import {Query, QueryResult, graphql } from 'react-apollo';
 import CreateIngredient from "./createIngredient";
 import {DELETE_INGREDIENT, GET_INGREDIENTS} from "../queries/ingredients";
+import {GetIngredientsQuery} from "../types";
 
-interface IngredientsData {
-    ingredients: Ingredient[]
-}
 
 export interface Ingredient {
     _id: string;
@@ -25,7 +21,7 @@ const IngredientsPage = (props) => {
     //const [ingredients , setIngredients] = useState<Ingredient[]>([]);
     const [ingredient, setIngredient] = useState<Ingredient>(null);
 
-    const { loading, data } = useQuery<IngredientsData>( GET_INGREDIENTS );
+    const { loading, data } = useQuery<GetIngredientsQuery>( GET_INGREDIENTS );
 
     const [deleteIngredient, deletedIngredient] = useMutation<
         {deleteIngredient: boolean},

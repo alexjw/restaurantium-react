@@ -1,4 +1,4 @@
-import {gql} from "apollo-boost";
+/*import {gql} from "apollo-boost";
 
 export const typeDefs = gql`
     extend type Mutation {
@@ -31,4 +31,6 @@ export const resolvers = {
             return data.someData;
         }
     }
-};
+};*/
+
+export default ''
