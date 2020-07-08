@@ -1,11 +1,11 @@
-import {gql} from "apollo-boost";
+import {DocumentNode, gql} from "apollo-boost";
+
+// Global queries with every field
 
 export const GET_INGREDIENTS = gql`
     query getIngredients {
         ingredients {
-            _id,
-            name,
-            measureUnit
+            _id, name, measureUnit
         }
     }
 `;
@@ -13,7 +13,7 @@ export const GET_INGREDIENTS = gql`
 export const SAVE_INGREDIENT = gql`
     mutation createIngredient($input: CreateIngredientInput!) {
         createIngredient(createIngredientInput: $input) {
-            _id, name
+            _id, name, measureUnit
         }
     }
 `;

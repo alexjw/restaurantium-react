@@ -209,6 +209,17 @@ export type Subscription = {
   ingredientAdded: Ingredient;
 };
 
+export type GetIngredientsIngredientsPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetIngredientsIngredientsPageQuery = (
+  { __typename?: 'Query' }
+  & { ingredients: Array<(
+    { __typename?: 'Ingredient' }
+    & Pick<Ingredient, '_id' | 'name'>
+  )> }
+);
+
 export type GetIngredientsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -229,7 +240,7 @@ export type CreateIngredientMutation = (
   { __typename?: 'Mutation' }
   & { createIngredient: (
     { __typename?: 'Ingredient' }
-    & Pick<Ingredient, '_id' | 'name'>
+    & Pick<Ingredient, '_id' | 'name' | 'measureUnit'>
   ) }
 );
 
@@ -272,6 +283,34 @@ export type FindIngredientQuery = (
 );
 
 
+export const GetIngredientsIngredientsPageDocument = gql`
+    query getIngredientsIngredientsPage {
+  ingredients {
+    _id
+    name
+  }
+}
+    `;
+export type GetIngredientsIngredientsPageComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetIngredientsIngredientsPageQuery, GetIngredientsIngredientsPageQueryVariables>, 'query'>;
+
+    export const GetIngredientsIngredientsPageComponent = (props: GetIngredientsIngredientsPageComponentProps) => (
+      <ApolloReactComponents.Query<GetIngredientsIngredientsPageQuery, GetIngredientsIngredientsPageQueryVariables> query={GetIngredientsIngredientsPageDocument} {...props} />
+    );
+    
+export type GetIngredientsIngredientsPageProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetIngredientsIngredientsPageQuery, GetIngredientsIngredientsPageQueryVariables>
+    } & TChildProps;
+export function withGetIngredientsIngredientsPage<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetIngredientsIngredientsPageQuery,
+  GetIngredientsIngredientsPageQueryVariables,
+  GetIngredientsIngredientsPageProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetIngredientsIngredientsPageQuery, GetIngredientsIngredientsPageQueryVariables, GetIngredientsIngredientsPageProps<TChildProps, TDataName>>(GetIngredientsIngredientsPageDocument, {
+      alias: 'getIngredientsIngredientsPage',
+      ...operationOptions
+    });
+};
+export type GetIngredientsIngredientsPageQueryResult = ApolloReactCommon.QueryResult<GetIngredientsIngredientsPageQuery, GetIngredientsIngredientsPageQueryVariables>;
 export const GetIngredientsDocument = gql`
     query getIngredients {
   ingredients {
@@ -306,6 +345,7 @@ export const CreateIngredientDocument = gql`
   createIngredient(createIngredientInput: $input) {
     _id
     name
+    measureUnit
   }
 }
     `;

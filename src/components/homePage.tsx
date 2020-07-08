@@ -1,4 +1,5 @@
 import React from "react";
+import '../stylesheets/homePage.sass'
 
 const HomePage = () => {
 

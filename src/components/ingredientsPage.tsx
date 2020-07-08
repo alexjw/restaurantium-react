@@ -1,13 +1,21 @@
-import React, {useEffect, useState} from "react";
-import { useQuery, useMutation, useSubscription  } from '@apollo/react-hooks';
-import IngredientCreateEdit from "./ingredientCreateEdit";
-import {DELETE_INGREDIENT, GET_INGREDIENTS} from "../queries/ingredients";
-import {GetIngredientsQuery, Ingredient} from "../types";
+import React from "react";
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import {GetIngredientsIngredientsPageQuery, Ingredient} from "../types";
 import {Link, RouteComponentProps} from "react-router-dom";
+import {gql} from "apollo-boost";
+import {DELETE_INGREDIENT} from "../queries/ingredients";
+
+const GET_INGREDIENTS = gql`
+    query getIngredientsIngredientsPage {
+        ingredients {
+            _id, name
+        }
+    }
+`;
 
 const IngredientsPage = (props: RouteComponentProps) => {
 
-    const { loading, data } = useQuery<GetIngredientsQuery>( GET_INGREDIENTS );
+    const { loading, data } = useQuery<GetIngredientsIngredientsPageQuery>( GET_INGREDIENTS );
 
     const [deleteIngredient, deletedIngredient] = useMutation<
         {deleteIngredient: boolean},

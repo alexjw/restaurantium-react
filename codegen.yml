@@ -1,5 +1,8 @@
 schema: http://localhost:3000/graphql
-documents: ./src/queries/*.tsx
+documents:
+  - ./src/queries/*.tsx
+  - ./src/components/*.tsx
+
 pluckConfig:
   globalIdentifier: gql
 generates:
