@@ -4,6 +4,7 @@ import {GetIngredientsIngredientsPageQuery, Ingredient} from "../types";
 import {Link, RouteComponentProps} from "react-router-dom";
 import {gql} from "apollo-boost";
 import {DELETE_INGREDIENT} from "../queries/ingredients";
+import Button from "react-bootstrap/cjs/Button";
 
 const GET_INGREDIENTS = gql`
     query getIngredientsIngredientsPage {
@@ -37,7 +38,7 @@ const IngredientsPage = (props: RouteComponentProps) => {
                         <p>Loading...</p> :
                         data.ingredients.map(ingredient => (
                             <li key={ingredient._id}>{ingredient.name} - {ingredient._id}
-                                <button onClick={() => props.history.push('/ingredients/' + ingredient._id)}>View</button>
+                                <Button  onClick={() => props.history.push('/ingredients/' + ingredient._id)}>View</Button>
                                 <button onClick={() => props.history.push('/ingredients/' + ingredient._id + '/edit')}>Edit</button>
                                 <button onClick={() => deleteIngredient({variables: {_id: ingredient._id}})}>
                                     Delete
