@@ -112,6 +112,7 @@ export type AdditionalMealInfo = {
 export type Mutation = {
   __typename?: 'Mutation';
   createClient: Client;
+  deleteClient: Scalars['Boolean'];
   createIngredient: Ingredient;
   deleteIngredient: Scalars['Boolean'];
   editIngredient: Ingredient;
@@ -123,6 +124,11 @@ export type Mutation = {
 
 export type MutationCreateClientArgs = {
   createClientInput: CreateClientInput;
+};
+
+
+export type MutationDeleteClientArgs = {
+  _id: Scalars['String'];
 };
 
 
@@ -209,6 +215,17 @@ export type Subscription = {
   ingredientAdded: Ingredient;
 };
 
+export type GetClientsClientsPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetClientsClientsPageQuery = (
+  { __typename?: 'Query' }
+  & { clients: Array<(
+    { __typename?: 'Client' }
+    & Pick<Client, '_id' | 'firstName' | 'lastName'>
+  )> }
+);
+
 export type GetIngredientsIngredientsPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -218,6 +235,27 @@ export type GetIngredientsIngredientsPageQuery = (
     { __typename?: 'Ingredient' }
     & Pick<Ingredient, '_id' | 'name'>
   )> }
+);
+
+export type GetClientsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetClientsQuery = (
+  { __typename?: 'Query' }
+  & { clients: Array<(
+    { __typename?: 'Client' }
+    & Pick<Client, '_id' | 'firstName' | 'lastName'>
+  )> }
+);
+
+export type DeleteClientMutationVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type DeleteClientMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deleteClient'>
 );
 
 export type GetIngredientsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -283,6 +321,35 @@ export type FindIngredientQuery = (
 );
 
 
+export const GetClientsClientsPageDocument = gql`
+    query getClientsClientsPage {
+  clients {
+    _id
+    firstName
+    lastName
+  }
+}
+    `;
+export type GetClientsClientsPageComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetClientsClientsPageQuery, GetClientsClientsPageQueryVariables>, 'query'>;
+
+    export const GetClientsClientsPageComponent = (props: GetClientsClientsPageComponentProps) => (
+      <ApolloReactComponents.Query<GetClientsClientsPageQuery, GetClientsClientsPageQueryVariables> query={GetClientsClientsPageDocument} {...props} />
+    );
+    
+export type GetClientsClientsPageProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetClientsClientsPageQuery, GetClientsClientsPageQueryVariables>
+    } & TChildProps;
+export function withGetClientsClientsPage<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetClientsClientsPageQuery,
+  GetClientsClientsPageQueryVariables,
+  GetClientsClientsPageProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetClientsClientsPageQuery, GetClientsClientsPageQueryVariables, GetClientsClientsPageProps<TChildProps, TDataName>>(GetClientsClientsPageDocument, {
+      alias: 'getClientsClientsPage',
+      ...operationOptions
+    });
+};
+export type GetClientsClientsPageQueryResult = ApolloReactCommon.QueryResult<GetClientsClientsPageQuery, GetClientsClientsPageQueryVariables>;
 export const GetIngredientsIngredientsPageDocument = gql`
     query getIngredientsIngredientsPage {
   ingredients {
@@ -311,6 +378,62 @@ export function withGetIngredientsIngredientsPage<TProps, TChildProps = {}, TDat
     });
 };
 export type GetIngredientsIngredientsPageQueryResult = ApolloReactCommon.QueryResult<GetIngredientsIngredientsPageQuery, GetIngredientsIngredientsPageQueryVariables>;
+export const GetClientsDocument = gql`
+    query getClients {
+  clients {
+    _id
+    firstName
+    lastName
+  }
+}
+    `;
+export type GetClientsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetClientsQuery, GetClientsQueryVariables>, 'query'>;
+
+    export const GetClientsComponent = (props: GetClientsComponentProps) => (
+      <ApolloReactComponents.Query<GetClientsQuery, GetClientsQueryVariables> query={GetClientsDocument} {...props} />
+    );
+    
+export type GetClientsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetClientsQuery, GetClientsQueryVariables>
+    } & TChildProps;
+export function withGetClients<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetClientsQuery,
+  GetClientsQueryVariables,
+  GetClientsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetClientsQuery, GetClientsQueryVariables, GetClientsProps<TChildProps, TDataName>>(GetClientsDocument, {
+      alias: 'getClients',
+      ...operationOptions
+    });
+};
+export type GetClientsQueryResult = ApolloReactCommon.QueryResult<GetClientsQuery, GetClientsQueryVariables>;
+export const DeleteClientDocument = gql`
+    mutation deleteClient($_id: String!) {
+  deleteClient(_id: $_id)
+}
+    `;
+export type DeleteClientMutationFn = ApolloReactCommon.MutationFunction<DeleteClientMutation, DeleteClientMutationVariables>;
+export type DeleteClientComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteClientMutation, DeleteClientMutationVariables>, 'mutation'>;
+
+    export const DeleteClientComponent = (props: DeleteClientComponentProps) => (
+      <ApolloReactComponents.Mutation<DeleteClientMutation, DeleteClientMutationVariables> mutation={DeleteClientDocument} {...props} />
+    );
+    
+export type DeleteClientProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<DeleteClientMutation, DeleteClientMutationVariables>
+    } & TChildProps;
+export function withDeleteClient<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  DeleteClientMutation,
+  DeleteClientMutationVariables,
+  DeleteClientProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, DeleteClientMutation, DeleteClientMutationVariables, DeleteClientProps<TChildProps, TDataName>>(DeleteClientDocument, {
+      alias: 'deleteClient',
+      ...operationOptions
+    });
+};
+export type DeleteClientMutationResult = ApolloReactCommon.MutationResult<DeleteClientMutation>;
+export type DeleteClientMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteClientMutation, DeleteClientMutationVariables>;
 export const GetIngredientsDocument = gql`
     query getIngredients {
   ingredients {

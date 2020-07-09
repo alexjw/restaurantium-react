@@ -7,6 +7,8 @@ import IngredientView from "./components/ingredientView";
 import IngredientCreateEdit from "./components/ingredientCreateEdit";
 import './stylesheets/App.sass'
 import TheNavBar from "./components/theNavBar";
+import ClientsPage from "./components/clientsPage";
+import TheFooter from "./components/theFooter";
 
 
 const App = () => {
@@ -28,8 +30,10 @@ const App = () => {
                     <Route exact path='/ingredients/new' component={IngredientCreateEdit}/>
                     <Route exact path='/ingredients/:id' component={IngredientView}/>
                     <Route exact path='/ingredients/:id/edit' component={IngredientCreateEdit}/>
+                    <Route exact path='/clients' component={ClientsPage}/>
                 </Switch>
             </div>
+            <TheFooter/>
         </div>
     )
 };

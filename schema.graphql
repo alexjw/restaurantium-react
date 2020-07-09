@@ -49,6 +49,7 @@ type Mutation {
     createItem(createItemInput: CreateItemInput!): Item!
     createMeal(createMealInput: CreateMealInput!): Meal!
     createOrder(createOrderInput: CreateOrderInput!): Order!
+    deleteClient(_id: String!): Boolean!
     deleteIngredient(_id: String!): Boolean!
     editIngredient(_id: String!, measureUnit: String, name: String): Ingredient!
 }

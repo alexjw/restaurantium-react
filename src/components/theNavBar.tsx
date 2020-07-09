@@ -13,6 +13,7 @@ const TheNavBar = () => {
                 <Nav className="mr-auto">
                     <Nav.Link href='/'>Home</Nav.Link>
                     <Nav.Link href="/ingredients">Ingredients</Nav.Link>
+                    <Nav.Link href="/clients">Clients</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

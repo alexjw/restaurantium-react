@@ -1,6 +1,12 @@
 import React from "react";
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import {GetIngredientsIngredientsPageQuery, Ingredient} from "../types";
+import {
+    DeleteIngredientMutation,
+    DeleteIngredientMutationResult,
+    DeleteIngredientMutationVariables,
+    GetIngredientsIngredientsPageQuery,
+    Ingredient
+} from "../types";
 import {Link, RouteComponentProps} from "react-router-dom";
 import {gql} from "apollo-boost";
 import {DELETE_INGREDIENT} from "../queries/ingredients";
@@ -19,8 +25,8 @@ const IngredientsPage = (props: RouteComponentProps) => {
     const { loading, data } = useQuery<GetIngredientsIngredientsPageQuery>( GET_INGREDIENTS );
 
     const [deleteIngredient, deletedIngredient] = useMutation<
-        {deleteIngredient: boolean},
-        { _id: string }
+        DeleteIngredientMutation,
+        DeleteIngredientMutationVariables
         >(DELETE_INGREDIENT, {
             refetchQueries: [{query: GET_INGREDIENTS}]
     });
