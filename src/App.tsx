@@ -9,6 +9,7 @@ import './stylesheets/App.sass'
 import TheNavBar from "./components/theNavBar";
 import ClientsPage from "./components/clientsPage";
 import TheFooter from "./components/theFooter";
+import MealsPage from "./components/mealsPage";
 
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
                     <Route exact path='/ingredients/:id' component={IngredientView}/>
                     <Route exact path='/ingredients/:id/edit' component={IngredientCreateEdit}/>
                     <Route exact path='/clients' component={ClientsPage}/>
+                    <Route exact path='/meals' component={MealsPage}/>
                 </Switch>
             </div>
             <TheFooter/>

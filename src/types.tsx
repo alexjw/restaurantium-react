@@ -320,6 +320,25 @@ export type FindIngredientQuery = (
   ) }
 );
 
+export type GetMealsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMealsQuery = (
+  { __typename?: 'Query' }
+  & { meals: Array<(
+    { __typename?: 'Meal' }
+    & Pick<Meal, '_id' | 'name' | 'sizes'>
+    & { details: Array<(
+      { __typename?: 'MealDetail' }
+      & Pick<MealDetail, 'quantity'>
+      & { ingredient: (
+        { __typename?: 'Ingredient' }
+        & Pick<Ingredient, '_id' | 'measureUnit' | 'name'>
+      ) }
+    )> }
+  )> }
+);
+
 
 export const GetClientsClientsPageDocument = gql`
     query getClientsClientsPage {
@@ -581,3 +600,40 @@ export function withFindIngredient<TProps, TChildProps = {}, TDataName extends s
     });
 };
 export type FindIngredientQueryResult = ApolloReactCommon.QueryResult<FindIngredientQuery, FindIngredientQueryVariables>;
+export const GetMealsDocument = gql`
+    query getMeals {
+  meals {
+    _id
+    name
+    sizes
+    details {
+      ingredient {
+        _id
+        measureUnit
+        name
+      }
+      quantity
+    }
+  }
+}
+    `;
+export type GetMealsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetMealsQuery, GetMealsQueryVariables>, 'query'>;
+
+    export const GetMealsComponent = (props: GetMealsComponentProps) => (
+      <ApolloReactComponents.Query<GetMealsQuery, GetMealsQueryVariables> query={GetMealsDocument} {...props} />
+    );
+    
+export type GetMealsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetMealsQuery, GetMealsQueryVariables>
+    } & TChildProps;
+export function withGetMeals<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetMealsQuery,
+  GetMealsQueryVariables,
+  GetMealsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetMealsQuery, GetMealsQueryVariables, GetMealsProps<TChildProps, TDataName>>(GetMealsDocument, {
+      alias: 'getMeals',
+      ...operationOptions
+    });
+};
+export type GetMealsQueryResult = ApolloReactCommon.QueryResult<GetMealsQuery, GetMealsQueryVariables>;
