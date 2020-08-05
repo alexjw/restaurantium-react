@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloClient, gql } from 'apollo-boost';
+import { ApolloClient } from 'apollo-boost';
 import * as Constants from "./utils/constants";
 
 const httpLink = createHttpLink(

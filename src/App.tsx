@@ -10,6 +10,7 @@ import TheNavBar from "./components/theNavBar";
 import ClientsPage from "./components/clientsPage";
 import TheFooter from "./components/theFooter";
 import MealsPage from "./components/mealsPage";
+import MealView from "./components/mealView";
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
                     <Route exact path='/ingredients/:id/edit' component={IngredientCreateEdit}/>
                     <Route exact path='/clients' component={ClientsPage}/>
                     <Route exact path='/meals' component={MealsPage}/>
+                    <Route exact path='/meals/:id' component={MealView}/>
                 </Switch>
             </div>
             <TheFooter/>

@@ -339,6 +339,27 @@ export type GetMealsQuery = (
   )> }
 );
 
+export type FindMealQueryVariables = Exact<{
+  _id: Scalars['String'];
+}>;
+
+
+export type FindMealQuery = (
+  { __typename?: 'Query' }
+  & { meal: (
+    { __typename?: 'Meal' }
+    & Pick<Meal, '_id' | 'name' | 'sizes'>
+    & { details: Array<(
+      { __typename?: 'MealDetail' }
+      & Pick<MealDetail, 'quantity'>
+      & { ingredient: (
+        { __typename?: 'Ingredient' }
+        & Pick<Ingredient, '_id' | 'measureUnit' | 'name'>
+      ) }
+    )> }
+  ) }
+);
+
 
 export const GetClientsClientsPageDocument = gql`
     query getClientsClientsPage {
@@ -637,3 +658,40 @@ export function withGetMeals<TProps, TChildProps = {}, TDataName extends string 
     });
 };
 export type GetMealsQueryResult = ApolloReactCommon.QueryResult<GetMealsQuery, GetMealsQueryVariables>;
+export const FindMealDocument = gql`
+    query findMeal($_id: String!) {
+  meal(_id: $_id) {
+    _id
+    name
+    details {
+      ingredient {
+        _id
+        measureUnit
+        name
+      }
+      quantity
+    }
+    sizes
+  }
+}
+    `;
+export type FindMealComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<FindMealQuery, FindMealQueryVariables>, 'query'> & ({ variables: FindMealQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const FindMealComponent = (props: FindMealComponentProps) => (
+      <ApolloReactComponents.Query<FindMealQuery, FindMealQueryVariables> query={FindMealDocument} {...props} />
+    );
+    
+export type FindMealProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<FindMealQuery, FindMealQueryVariables>
+    } & TChildProps;
+export function withFindMeal<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  FindMealQuery,
+  FindMealQueryVariables,
+  FindMealProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, FindMealQuery, FindMealQueryVariables, FindMealProps<TChildProps, TDataName>>(FindMealDocument, {
+      alias: 'findMeal',
+      ...operationOptions
+    });
+};
+export type FindMealQueryResult = ApolloReactCommon.QueryResult<FindMealQuery, FindMealQueryVariables>;

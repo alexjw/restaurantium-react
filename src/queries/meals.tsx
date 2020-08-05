@@ -12,3 +12,19 @@ export const GET_MEALS = gql`
         }
     }
 `;
+
+export const FIND_MEAL = gql`
+    query findMeal($_id: String!) {
+        meal(_id: $_id) {
+            _id,
+            name,
+            details {
+                ingredient {
+                    _id, measureUnit, name
+                },
+                quantity
+            },
+            sizes
+        }
+    }
+`;

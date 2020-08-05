@@ -12,11 +12,11 @@ const MealsPage = (props: RouteComponentProps) => {
     const getMealsQuery = useQuery<GetMealsQuery>( GET_MEALS );
 
     const viewFunc = (id: string) => {
-        props.history.push('/ingredients/' + id)
+        props.history.push('/meals/' + id)
     };
 
     const editFunc = (id: string) => {
-        props.history.push('/ingredients/' + id + '/edit')
+        props.history.push('/meals/' + id + '/edit')
     };
 
     if(getMealsQuery.loading)
